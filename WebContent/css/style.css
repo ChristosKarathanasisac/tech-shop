@@ -1,0 +1,236 @@
+@charset "UTF-8";
+body {
+  background-image: linear-gradient(to right, rgb(110, 110, 110), rgb(7, 7, 7));
+  font-family: "Lucida Console", "Courier New", monospace;
+  margin-bottom: 0rem;
+  padding-bottom: 0rem;
+  font-size: 1.8rem;
+}
+/*h1 desing*/
+header > h1 {
+  color: rgb(7, 7, 7);
+  text-shadow: 0rem 0rem 1rem;
+  font-size: medium;
+}
+/*Logo style and animation */
+img#logo {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: inline;
+
+  position: relative;
+  animation-name: logo_move;
+  animation-duration: 8s;
+}
+
+@keyframes logo_move {
+  0% {
+    transform: rotateZ(30deg);
+  }
+  10% {
+    transform: rotateZ(90deg);
+  }
+  20% {
+    transform: rotateZ(180deg);
+  }
+  30% {
+    transform: rotateZ(270deg);
+  }
+  50% {
+    transform: rotateZ(360deg);
+  }
+  70% {
+    transform: rotateZ(270deg);
+  }
+  80% {
+    transform: rotateZ(180deg);
+  }
+  90% {
+    transform: rotateZ(90deg);
+  }
+  100% {
+    transform: rotateZ(0deg);
+  }
+}
+/*Navbar style*/
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: rgb(7, 7, 7);
+  border-radius: 25px;
+}
+
+li {
+  float: left;
+}
+/*all nav element exept login*/
+li a,
+/*dropP =DROP Paragraf*/
+.dropP a {
+  color: rgb(243, 237, 237);
+  text-align: center;
+  padding-top: 1rem;
+  margin-right: 0.6rem;
+  margin-left: 0.6rem;
+  text-decoration: none;
+}
+
+.dropP {
+  color: rgb(243, 237, 237);
+  text-align: center;
+  margin-top: 0rem;
+  margin-right: 0.6rem;
+  margin-left: 0.6rem;
+  margin-bottom: 0rem;
+  padding-top: 0rem;
+  padding-bottom: 0rem;
+  cursor: pointer;
+}
+/*Login button*/
+button#openLogIn,
+button#openregister {
+  font-size: 1.8rem;
+  background-color: rgb(7, 7, 7);
+  color: white;
+}
+li a:hover,
+button#openLogIn:hover,
+button#openregister:hover {
+  background-color: rgb(110, 110, 110);
+  color: rgb(7, 7, 7);
+  text-shadow: 0rem 0rem 0.6rem rgb(7, 7, 7);
+  padding-top: 0rem;
+  cursor: pointer;
+}
+.dropdown-content {
+  display: none;
+  background-color: rgb(7, 7, 7);
+  color: rgb(110, 110, 110);
+  text-shadow: 0rem 0rem 0.6rem rgb(7, 7, 7);
+  /*padding-top: 0rem;*/
+  cursor: pointer;
+  position: absolute;
+  /*background-color: rgb(7, 7, 7);*/
+  padding: 0rem;
+  margin: 0rem;
+  overflow: hidden;
+}
+.dropdown {
+  float: center;
+  overflow: hidden;
+  margin: 0rem;
+  padding: 0rem;
+}
+.dropdown:hover .dropdown-content {
+  display: inline-block;
+  cursor: pointer;
+}
+li#logIn,
+li#register {
+  float: right;
+  padding-right: 1rem;
+}
+
+/*Grid Template*/
+.item-a {
+  grid-area: header;
+}
+.item-b {
+  grid-area: nav;
+  margin-top: 0rem;
+  padding-top: 0rem;
+}
+.item-c {
+  grid-area: main;
+}
+.item-d {
+  grid-area: sidebar;
+}
+.item-e {
+  padding-top: 1rem;
+  color: rgb(7, 7, 7);
+  position: fixed;
+  width: 98%;
+  bottom: 10px;
+  grid-area: footer;
+  border: 0.02rem solid rgb(7, 7, 7);
+  font-size: medium;
+}
+#page {
+  display: grid;
+  margin-top: 0rem;
+  padding-top: 0rem;
+  grid-template-columns: 30rem 60rem 28rem;
+  grid-template-rows: 2rem 54rem 1rem;
+  grid-template-areas:
+    "header nav nav"
+    ". main sidebar"
+    "footer . .";
+}
+footer > p {
+  font-size: small;
+  text-align: right;
+  font-style: italic;
+  color: rgb(110, 110, 110);
+}
+
+address > p {
+  margin: 0;
+  padding: 0;
+  font-size: small;
+  text-align: left;
+  color: rgb(7, 7, 7);
+}
+
+main > table {
+  text-align: center;
+  font-size: medium;
+  padding-left: 10rem;
+}
+
+main > h2 {
+  text-align: center;
+}
+main > form {
+  text-align: center;
+  /*border: 0.02rem solid rgb(7, 7, 7);*/
+  display: block;
+  position: relative;
+  background-color: rgb(61, 61, 61);
+  margin: 0rem;
+}
+form > img {
+  border-left: 0rem;
+}
+form > legend {
+  text-shadow: 0 0 2rem;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+}
+/*.nav-btns {
+  display: block;
+}*/
+.frmbtn {
+  display: block;
+}
+.frmbtn button {
+  color: rgb(61, 61, 61);
+  background-color: rgb(7, 7, 7);
+  font-size: medium;
+}
+.inputfield-container {
+  display: block;
+  text-align: center;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+}
+.inputfield {
+  background-color: rgb(7, 7, 7);
+  color: rgb(110, 110, 110);
+  size: 2rem;
+  font-size: medium;
+}
