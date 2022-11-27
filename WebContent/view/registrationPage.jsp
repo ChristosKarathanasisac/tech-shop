@@ -50,7 +50,7 @@
       </nav>
       <main class="item-c">
         <h2>Registretion Form</h2>
-        <form action="post">
+        <form action = "../RegistrationHandler" method="post">
           <legend>Fill in your details</legend>
           <img
             src="../photos/user.png"
@@ -64,7 +64,7 @@
             <input
               class="inputfield"
               type="text"
-              name="uname"
+              name="fname"
               required
             />
           </div>
@@ -73,7 +73,7 @@
             <input
               class="inputfield"
               type="text"
-              name="psw"
+              name="lname"
               required
             />
           </div>
