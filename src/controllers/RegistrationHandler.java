@@ -1,6 +1,8 @@
 package controllers;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +22,12 @@ public class RegistrationHandler extends HttpServlet {
         RegistartionBean customer = RegistartionBean.createCustomer(request);
         if(dao.checkIfUsnameUsed(customer.getUsername())) 
 		{
-			System.out.println("The user name is used");
+			//System.out.println("The user name is used");
+			request.setAttribute("usernameIsUsed", true);
+			String address;
+			address = "view/registrationPage.jsp";
+			RequestDispatcher dispatcher = request.getRequestDispatcher(address);
+	        dispatcher.forward(request, response);
 		}
         
         if(dao.insertCustomerToDB(RegistartionBean.createCustomer(request))) 

@@ -126,6 +126,18 @@
           <div class="frmbtn">
             <button type="submit"><strong>Register</strong></button>
           </div>
+         <!-- Edo tha valo to dynamico periexomeno -->
+         <%
+    		//String usernameIsUsed = "${usernameIsUsed}";
+    		if((request.getAttribute("usernameIsUsed")!=null) &&	((Boolean)request.getAttribute("usernameIsUsed")))
+    		{
+    			
+    			out.print("<p>\r\n"+
+    					"The username already used\r\n"+
+            		  "</p>");
+    		}
+            
+		  %>
         </form>
       </main>
       <footer class="item-e">
