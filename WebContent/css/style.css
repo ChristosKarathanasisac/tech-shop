@@ -70,7 +70,8 @@ li {
 /*all nav element exept login*/
 li a,
 /*dropP =DROP Paragraf*/
-.dropP a {
+.dropP a
+ {
   color: rgb(243, 237, 237);
   text-align: center;
   padding-top: 1rem;
@@ -78,7 +79,6 @@ li a,
   margin-left: 0.6rem;
   text-decoration: none;
 }
-
 .dropP {
   color: rgb(243, 237, 237);
   text-align: center;

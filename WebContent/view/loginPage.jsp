@@ -6,14 +6,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
     <title>TechShop-login</title>
   </head>
   <body>
     <article id="page">
       <header class="item-a">
         <img
-          src="../photos/TechShopLogo.png"
+          src="${pageContext.request.contextPath}/photos/TechShopLogo.png"
           alt="Tech Shop Logo"
           width="300"
           height="300"
@@ -23,7 +23,7 @@
       </header>
       <nav class="item-b">
         <ul>
-          <li><a href="../">Home</a></li>
+          <li><a href="${pageContext.request.contextPath}/view/index.jsp">Home</a></li>
           <li><a href="#news">News</a></li>
           <li><a href="#about">About</a></li>
           <li>
@@ -38,7 +38,7 @@
           </li>
           <li id="register">
             <button type="button" id="openregister">
-              <a href="registrationPage.jsp">Register</a>
+              <a href="${pageContext.request.contextPath}/view/registrationPage.jsp">Register</a>
             </button>
           </li>
           <li id="logIn">
@@ -53,7 +53,7 @@
         <form action="post">
           <legend>Fill in your details</legend>
           <img
-            src="../photos/user.png"
+            src="${pageContext.request.contextPath}/photos/user.png"
             alt="user icon"
             width="200"
             height="200"

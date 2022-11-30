@@ -8,6 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import beans.RegistartionBean;
 import dbhandlers.DButilities;
 
@@ -17,27 +19,48 @@ public class RegistrationHandler extends HttpServlet {
        
    
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        DButilities dao = new DButilities();
+        String  address = "/view/registrationPage.jsp";
+        RequestDispatcher dispatcher = request.getRequestDispatcher(address);
+        String result = "";
         
+        if(!request.getParameter("psw").toString().trim().equals(request.getParameter("cpsw").toString().trim())) 
+        {
+        	result = "Passwords are not equal";
+        	request.setAttribute("result", result);
+        	dispatcher.forward(request, response);
+        }
         RegistartionBean customer = RegistartionBean.createCustomer(request);
+        DButilities dao = new DButilities();
         if(dao.checkIfUsnameUsed(customer.getUsername())) 
 		{
-			//System.out.println("The user name is used");
-			request.setAttribute("usernameIsUsed", true);
-			String address;
-			address = "view/registrationPage.jsp";
-			RequestDispatcher dispatcher = request.getRequestDispatcher(address);
+        	result = "The username already used";
+			request.setAttribute("result", result);
 	        dispatcher.forward(request, response);
 		}
         
         if(dao.insertCustomerToDB(RegistartionBean.createCustomer(request))) 
         {
-        	System.out.println("Customer inserted successfully");
+        	result = "Succesfull registration";
+        	request.setAttribute("userInserted", true);
+        	createSession(request,customer); 
         }else 
         {
-        	System.out.println("We had problem with registration");
+        	result = "Problem with registration. Try Again";
+        	request.setAttribute("userInserted", false);
         }
+        request.setAttribute("result", result);
+        //RequestDispatcher dispatcher= request.getRequestDispatcher(address);
+        dispatcher.forward(request, response);
        
+	}
+	private void createSession(HttpServletRequest request,RegistartionBean customer) 
+	{
+		HttpSession session = request.getSession();
+    	session.setAttribute("first_name", customer.getFirstName());
+		session.setAttribute("last_name", customer.getLastName());
+		session.setAttribute("username", customer.getUsername());
+		session.setAttribute("address", customer.getAddress());
+		session.setAttribute("email", customer.getEmail());
 	}
 
 }

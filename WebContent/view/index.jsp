@@ -6,14 +6,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet" href="./css/style.css" />
+    <!--<link rel="stylesheet" href="./css/style.css" />-->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
+    <!-- WebContent/css -->
     <title>TechShop-home</title>
   </head>
   <body>
     <section id="page">
       <header class="item-a">
         <img
-          src="photos/TechShopLogo.png"
+          src="${pageContext.request.contextPath}/photos/TechShopLogo.png"
           alt="Tech Shop Logo"
           width="300"
           height="300"
@@ -38,12 +40,12 @@
           </li>
           <li id="register">
             <button type="button" id="openregister">
-              <a href="view/registrationPage.jsp">Register</a>
+              <a href="${pageContext.request.contextPath}/view/registrationPage.jsp">Register</a>
             </button>
           </li>
           <li id="logIn">
             <button type="button" id="openLogIn">
-              <a href="view/loginPage.jsp">Login</a>
+              <a href="${pageContext.request.contextPath}/view/loginPage.jsp">Login</a>
             </button>
           </li>
         </ul>
@@ -55,7 +57,7 @@
             <td>
               <p>Free support!</p>
               <img
-                src="photos/pic-support.png"
+                src="${pageContext.request.contextPath}/photos/pic-support.png"
                 alt="Support"
                 width="200"
                 height="150"
@@ -64,16 +66,16 @@
             <td>
               <p>Free delivery!</p>
               <img
-                src="photos/pic-delivery.png"
+                src="${pageContext.request.contextPath}/photos/pic-delivery.png"
                 alt="Delivery"
                 width="200"
                 height="150"
               />
             </td>
             <td>
-              <p>Αll payment methods!</p>
+              <p>All payment methods!</p>
               <img
-                src="photos/pic-payment-methods.png"
+                src="${pageContext.request.contextPath}/photos/pic-payment-methods.png"
                 alt="Payment Methods"
                 width="200"
                 height="150"
