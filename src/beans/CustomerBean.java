@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-public class RegistartionBean implements Serializable {
+public class CustomerBean implements Serializable {
 	private String firstName;
 	private String lastName;
 	private String username;
@@ -14,10 +14,6 @@ public class RegistartionBean implements Serializable {
 	private String email;
 	private String address;
 	
-	
-	public RegistartionBean() {
-		super();
-	}
 	public String getFirstName() {
 		return firstName;
 	}
@@ -54,8 +50,7 @@ public class RegistartionBean implements Serializable {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
-	public static RegistartionBean createCustomer(HttpServletRequest request) 
+	public static CustomerBean createCustomer(HttpServletRequest request) 
 	{
 		String firstname = request.getParameter("fname");
 		String lastname = request.getParameter("lname");
@@ -64,7 +59,7 @@ public class RegistartionBean implements Serializable {
         String password = request.getParameter("psw");
         String email = request.getParameter("email");
         
-        RegistartionBean customer = new  RegistartionBean();
+        CustomerBean customer = new  CustomerBean();
         
         customer.setFirstName(firstname);
         customer.setLastName(lastname);
@@ -75,6 +70,5 @@ public class RegistartionBean implements Serializable {
         
         return customer;
 	}
-	
 
 }

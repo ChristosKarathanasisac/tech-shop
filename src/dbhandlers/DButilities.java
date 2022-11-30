@@ -2,7 +2,7 @@ package dbhandlers;
 
 import java.sql.*;
 
-import beans.RegistartionBean;
+import beans.CustomerBean;
 
 
 public  class DButilities {
@@ -16,8 +16,7 @@ public  class DButilities {
 			Class.forName(DB_DRIVER);
 			return true;
 		} catch (ClassNotFoundException e) {
-			//e.printStackTrace();
-			System.out.println("problem in loadDriver");
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -27,13 +26,12 @@ public  class DButilities {
 		try {
 			con = DriverManager.getConnection(DB_URL, DB_USERNAME , DB_PASSWORD);
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 		return con;
 	}
 
-	public  Boolean insertCustomerToDB(RegistartionBean rb) 
+	public  Boolean insertCustomerToDB(CustomerBean rb) 
      {
 		Connection con =null;
 		if(loadDriver()) 
@@ -61,6 +59,12 @@ public  class DButilities {
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
+			try {
+				con.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				return false;
+			}
 			return false;
 		}
 }
@@ -77,6 +81,7 @@ public  class DButilities {
 			            preparedStatement.setString(1, username);
 			            ResultSet rs = preparedStatement.executeQuery();
 			            while (rs.next()) {
+			            	con.close();
 			            	return true;
 			            	 
 			            }
@@ -84,6 +89,49 @@ public  class DButilities {
 			            }} catch (SQLException e) {
 			
 			e.printStackTrace();
+			try {
+				con.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				return false;
+			}
+			return false;
+		}
+					
+	}
+	public CustomerBean getCustomerFromDB(String username,String password)
+	{
+		CustomerBean customer =null;
+		Connection con =null;
+		if(loadDriver()) 
+		{
+		   con =getConnection();
+		}
+		System.out.println("connection  ok");
+		try {
+			 PreparedStatement preparedStatement = con
+			            .prepareStatement("SELECT * FROM customer where USERNAME = ? AND PASSWORD =?"); 
+			            preparedStatement.setString(1, username);
+			            preparedStatement.setString(2, password);
+			            ResultSet rs = preparedStatement.executeQuery();
+			            while (rs.next()) {
+			            	customer  =new CustomerBean();
+			            	customer.setFirstName(rs.getString("FIRSTNAME"));
+			            	customer.setLastName(rs.getString("LASTNAME"));
+			            	customer.setAddress(rs.getString("ADDRESS"));
+			            	customer.setEmail(rs.getString("EMAIL"));
+			            	customer.setUsername(rs.getString("USERNAME"));
+			            }
+			            return customer;
+			            } catch (SQLException e) {
+			
+			e.printStackTrace();
+			try {
+				con.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				return null;
+			}
 			return null;
 		}
 					

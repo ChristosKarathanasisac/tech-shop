@@ -36,21 +36,38 @@
               </div>
             </div>
           </li>
-          <li id="register">
-            <button type="button" id="openregister">
-              <a href="${pageContext.request.contextPath}/view/registrationPage.jsp">Register</a>
-            </button>
-          </li>
-          <li id="logIn">
-            <button type="button" id="openLogIn">
-              <a href="">Login</a>
-            </button>
-          </li>
+          <%
+          		session = request.getSession();
+          		if(session.getAttribute("first_name") !=null)
+          		{
+          			String pathLogout = request.getContextPath()+"/LogOutHandler";
+          			out.print("<li style=\"float:right;padding-right: 1rem;\">"+"\r\n"+
+      		            	"<button type=\"button\" style=\"font-size: 1.8rem;background-color: rgb(7, 7, 7);color: white;\">"+
+      		            		"<a href=\""+pathLogout+"\">"+"Logout</a>"+"\r\n"+
+              				"</button>"+"\r\n"+
+            			"</li>");
+          			
+          		}else
+          		{
+          			String pathRegister = request.getContextPath()+"/view/registrationPage.jsp";
+          			out.print("<li id=\"register\">"+"\r\n"+
+      		            	"<button type=\"button\" id=\"openregister\">"+
+      		            		"<a href=\""+pathRegister+"\">"+"Register</a>"+"\r\n"+
+              				"</button>"+"\r\n"+
+            			"</li>");
+          			String pathLogin = request.getContextPath()+"/view/loginPage.jsp";
+          			out.print("<li id=\"logIn\">"+"\r\n"+
+          		            	"<button type=\"button\" id=\"openLogIn\">"+
+          		            		"<a href=\""+pathLogin+"\">"+"Login</a>"+"\r\n"+
+                  				"</button>"+"\r\n"+
+                			"</li>");
+          		}
+          %>
         </ul>
       </nav>
       <main class="item-c">
         <h2>Login Form</h2>
-        <form action="post">
+        <form action = "${pageContext.request.contextPath}/LoginHandler" method="post">
           <legend>Fill in your details</legend>
           <img
             src="${pageContext.request.contextPath}/photos/user.png"
@@ -70,6 +87,15 @@
           <div class="frmbtn">
             <button type="submit"><strong>Login</strong></button>
           </div>
+           <%
+    	    if((request.getAttribute("result")!=null))
+    		{
+    	    	out.print("<p>\r\n"+
+    	    					request.getAttribute("result")+"\r\n"+
+    	            		  "</p>");
+    		}
+            
+		  %>
         </form>
       </main>
       <footer class="item-e">

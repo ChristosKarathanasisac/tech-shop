@@ -41,23 +41,29 @@
           		session = request.getSession();
           		if(session.getAttribute("first_name") !=null)
           		{
-          			String name = session.getAttribute("first_name").toString();
-          			out.print("<li style=\"color:white; background-color:red;float:right;margin:0;padding:0;\"><p style=\"background-color:green;margin:0;padding:0;\">"+
-	    					"Hello "+name+"\r\n"+
-	            		     "</p></li>");
+          			String pathLogout = request.getContextPath()+"/LogOutHandler";
+          			out.print("<li style=\"float:right;padding-right: 1rem;\">"+"\r\n"+
+      		            	"<button type=\"button\" style=\"font-size: 1.8rem;background-color: rgb(7, 7, 7);color: white;\">"+
+      		            		"<a href=\""+pathLogout+"\">"+"Logout</a>"+"\r\n"+
+              				"</button>"+"\r\n"+
+            			"</li>");
           			
+          		}else
+          		{
+          			String pathRegister = request.getContextPath()+"/view/registrationPage.jsp";
+          			out.print("<li id=\"register\">"+"\r\n"+
+      		            	"<button type=\"button\" id=\"openregister\">"+
+      		            		"<a href=\""+pathRegister+"\">"+"Register</a>"+"\r\n"+
+              				"</button>"+"\r\n"+
+            			"</li>");
+          			String pathLogin = request.getContextPath()+"/view/loginPage.jsp";
+          			out.print("<li id=\"logIn\">"+"\r\n"+
+          		            	"<button type=\"button\" id=\"openLogIn\">"+
+          		            		"<a href=\""+pathLogin+"\">"+"Login</a>"+"\r\n"+
+                  				"</button>"+"\r\n"+
+                			"</li>");
           		}
           %>
-          <li id="register">
-            <button type="button" id="openregister">
-              <a href="${pageContext.request.contextPath}/view/registrationPage.jsp">Register</a>
-            </button>
-          </li>
-          <li id="logIn">
-            <button type="button" id="openLogIn">
-              <a href="${pageContext.request.contextPath}/view/loginPage.jsp">Login</a>
-            </button>
-          </li>
         </ul>
       </nav>
       <main class="item-c">

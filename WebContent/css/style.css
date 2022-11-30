@@ -92,14 +92,16 @@ li a,
 }
 /*Login button*/
 button#openLogIn,
-button#openregister {
+button#openregister,
+button#openlogout {
   font-size: 1.8rem;
   background-color: rgb(7, 7, 7);
   color: white;
 }
 li a:hover,
 button#openLogIn:hover,
-button#openregister:hover {
+button#openregister:hover,
+button#openlogout:hover {
   background-color: rgb(110, 110, 110);
   color: rgb(7, 7, 7);
   text-shadow: 0rem 0rem 0.6rem rgb(7, 7, 7);
@@ -130,7 +132,8 @@ button#openregister:hover {
   cursor: pointer;
 }
 li#logIn,
-li#register {
+li#register,
+li#logout {
   float: right;
   padding-right: 1rem;
 }
