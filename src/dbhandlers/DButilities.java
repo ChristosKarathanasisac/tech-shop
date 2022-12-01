@@ -1,8 +1,10 @@
 package dbhandlers;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 import beans.CustomerBean;
+import beans.ProductBean;
 
 
 public  class DButilities {
@@ -42,7 +44,7 @@ public  class DButilities {
 			return false;
 		}
 		
-		String sql = "INSERT INTO customer (USERNAME, PASSWORD, FIRSTNAME, LASTNAME, EMAIL, ADDRESS)\r\n" + 
+		String sql = "INSERT INTO CUSTOMERS (USERNAME, PASSWORD, FIRSTNAME, LASTNAME, EMAIL, ADDRESS)\r\n" + 
 					 "VALUES (?, ?, ?, ?, ?, ?);";	
 		try {
 			PreparedStatement ps = (PreparedStatement) con.prepareStatement(sql);
@@ -77,7 +79,7 @@ public  class DButilities {
 		}
 		try {
 			 PreparedStatement preparedStatement = con
-			            .prepareStatement("SELECT * FROM customer where USERNAME = ?"); {
+			            .prepareStatement("SELECT * FROM customers WHERE USERNAME = ?"); {
 			            preparedStatement.setString(1, username);
 			            ResultSet rs = preparedStatement.executeQuery();
 			            while (rs.next()) {
@@ -107,10 +109,10 @@ public  class DButilities {
 		{
 		   con =getConnection();
 		}
-		System.out.println("connection  ok");
+		//System.out.println("connection  ok");
 		try {
 			 PreparedStatement preparedStatement = con
-			            .prepareStatement("SELECT * FROM customer where USERNAME = ? AND PASSWORD =?"); 
+			            .prepareStatement("SELECT * FROM customers WHERE USERNAME = ? AND PASSWORD =?"); 
 			            preparedStatement.setString(1, username);
 			            preparedStatement.setString(2, password);
 			            ResultSet rs = preparedStatement.executeQuery();
@@ -123,6 +125,46 @@ public  class DButilities {
 			            	customer.setUsername(rs.getString("USERNAME"));
 			            }
 			            return customer;
+			            } catch (SQLException e) {
+			
+			e.printStackTrace();
+			try {
+				con.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				return null;
+			}
+			return null;
+		}
+					
+	}
+	public ArrayList<ProductBean> getProductsFromDB(String category)
+	{
+		ProductBean product =null;
+		ArrayList<ProductBean> products = new ArrayList<ProductBean>();
+		Connection con =null;
+		if(loadDriver()) 
+		{
+		   con =getConnection();
+		}
+		//System.out.println("connection  ok");
+		try {
+			 PreparedStatement preparedStatement = con
+			            .prepareStatement("SELECT * FROM products WHERE CATEGORY =?"); 
+			            preparedStatement.setString(1, category);
+			            ResultSet rs = preparedStatement.executeQuery();
+			            while (rs.next()) {
+			            	product  =new ProductBean();
+			            	product.setId(rs.getInt("ID"));
+			            	product.setName(rs.getString("NAME"));
+			            	product.setCategory(rs.getString("CATEGORY"));
+			            	product.setBalance(rs.getInt("BALANCE"));
+			            	product.setPrice(rs.getDouble("PRICE"));
+			            	product.setPhotopath((rs.getString("PHOTOPATH")));
+			            	
+			            	products.add(product);
+			            }
+			            return products;
 			            } catch (SQLException e) {
 			
 			e.printStackTrace();

@@ -10,8 +10,7 @@
      <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
     <title>TechShop-register</title>
   </head>
-  <body>
-    <article id="page">
+  <body id="page">
       <header class="item-a">
         <img
           src="${pageContext.request.contextPath}/photos/TechShopLogo.png" 
@@ -31,7 +30,7 @@
             <div class="dropdown">
               <p class="dropP">Products</p>
               <div class="dropdown-content">
-                <a href="#">Computers</a>
+                <a href="${pageContext.request.contextPath}/ComputersPageHandler">Computers</a>
                 <a href="#">Tablets</a>
                 <a href="#">Smartphones</a>
               </div>
@@ -166,7 +165,6 @@
           for test reasons.
         </p>
       </footer>
-    </article>
   </body>
 </html>
     

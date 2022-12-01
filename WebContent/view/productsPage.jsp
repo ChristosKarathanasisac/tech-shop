@@ -1,13 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.List" %>
+<%@ page import="beans.ProductBean" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!--<link rel="stylesheet" href="./css/style.css" />-->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
-    <title>TechShop-login</title>
+    <!-- WebContent/css -->
+    <title>TechShop-home</title>
   </head>
   <body id="page">
       <header class="item-a">
@@ -29,7 +33,7 @@
             <div class="dropdown">
               <p class="dropP">Products</p>
               <div class="dropdown-content">
-                <a href="${pageContext.request.contextPath}/ComputersPageHandler">Computers</a>
+                <a href="#">Computers</a>
                 <a href="#">Tablets</a>
                 <a href="#">Smartphones</a>
               </div>
@@ -45,9 +49,11 @@
       		            		"<a href=\""+pathLogout+"\">"+"Logout</a>"+"\r\n"+
               				"</button>"+"\r\n"+
             			"</li>");
-          			
-          		}else
+          		
+          		}
+          		else
           		{
+          			
           			String pathRegister = request.getContextPath()+"/view/registrationPage.jsp";
           			out.print("<li id=\"register\">"+"\r\n"+
       		            	"<button type=\"button\" id=\"openregister\">"+
@@ -59,43 +65,65 @@
           		            	"<button type=\"button\" id=\"openLogIn\">"+
           		            		"<a href=\""+pathLogin+"\">"+"Login</a>"+"\r\n"+
                   				"</button>"+"\r\n"+
-                			"</li>");
-          		}
+                			"</li>");	}
           %>
         </ul>
       </nav>
       <main class="item-c">
-        <h2>Login Form</h2>
-        <form action = "${pageContext.request.contextPath}/LoginHandler" method="post">
-          <legend>Fill in your details</legend>
-          <img
-            src="${pageContext.request.contextPath}/photos/user.png"
-            alt="user icon"
-            width="200"
-            height="200"
-            id="userlogo"
-          />
-          <div class="inputfield-container">
-            <label for="uname"><strong>Username:</strong></label>
-            <input class="inputfield" type="text" name="uname" required />
-          </div>
-          <div class="inputfield-container">
-            <label for="psw"><strong>Password:</strong></label>
-            <input class="inputfield" type="password" name="psw" required />
-          </div>
-          <div class="frmbtn">
-            <button type="submit"><strong>Login</strong></button>
-          </div>
-           <%
-    	    if((request.getAttribute("result")!=null))
-    		{
-    	    	out.print("<p>\r\n"+
-    	    					request.getAttribute("result")+"\r\n"+
-    	            		  "</p>");
-    		}
-            
-		  %>
-        </form>
+      <%
+         if(request.getAttribute("h2")!=null)
+         {
+        	 out.print("<h2>"+request.getAttribute("h2").toString()+"</h2>");
+         }else
+         {
+        	 out.print("Products");
+         }
+         
+      %>
+        <table>
+        <tr>
+        <%
+        
+        	int count=1;
+        	List<ProductBean> products=null;
+        	if(request.getAttribute("products")==null)
+        	{
+        		out.print("<h4 style=\"float:center;\">No Data to display.</h4>");
+        	}else
+        	{
+        		products = (List)request.getAttribute("products");
+        		
+        		for(ProductBean p:products)
+            	{
+        			if(count==1)
+        			{
+        				out.print("<tr>\r\n");
+        			}
+        			String photopath = request.getContextPath()+p.getPhotopath(); 
+            		out.print("<td>\r\n"+
+        					  	"<div class=\"card\">\r\n"+
+            				  		"<img\r\n"+
+        					  			"src=\""+photopath+"\"\r\n"+
+            				  			"alt=\""+p.getName()+"\"\r\n"+
+        					  			"width=\"80\"\r\n"+
+            				  			"height=\"120\"\r\n"+
+        					  			"style=\"width: 100%\"\r\n"+
+            				  		"/>\r\n"+
+        					  		"<h3>"+p.getName()+"</h3>\r\n"+
+            				  "<p class=\"price\">$"+String.valueOf(p.getPrice())+"</p>\r\n"+
+        					  "<p>Some text for the computer.</p>\r\n"+
+            				  "<p><button>Add to Cart</button></p>\r\n"+
+        					  "</div>\r\n"+
+            				  "</td>\r\n");     
+        			if(count==3)
+        			{
+        				out.print("</tr>\r\n");
+        			}
+        			count++;
+        		}
+        	}
+        %>
+      </table>
       </main>
       <footer class="item-e">
         <address>
@@ -104,7 +132,7 @@
           <p>Adress: anAdreess</p>
         </address>
         <p>
-          This web site developed by Christos Karathanasis,<br />
+          This web site created by Christos Karathanasis<br />
           for test reasons.
         </p>
       </footer>
