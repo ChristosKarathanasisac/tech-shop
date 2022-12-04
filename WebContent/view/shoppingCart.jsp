@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="java.util.List" %>
+<%@ page import="beans.ProductBean" %>
+<%@ page import="beans.CustomerBean" %>
 <%@ page import="services.PrintServices" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +28,7 @@
       </header>
       <nav class="item-b">
         <ul>
-          <li><a href="">Home</a></li>
+          <li><a href="${pageContext.request.contextPath}/view/index.jsp">Home</a></li>
           <li><a href="#news">News</a></li>
           <li><a href="#about">About</a></li>
           <li>
@@ -39,53 +42,44 @@
             </div>
           </li>
           <%
-          		session = request.getSession();
-          		if(session.getAttribute("customer") !=null)
-          		{
-          			out.print(PrintServices.getLogOutbtn(request.getContextPath()+"/LogOutHandler"));
-          			out.print(PrintServices.getShoppingCartbtn(request.getContextPath()+"/ShoppingCartHandler"));
-          		}
-          		else
-          		{
-          			out.print(PrintServices.getRegisterbtn(request.getContextPath()+"/view/registrationPage.jsp"));	
-          			out.print(PrintServices.getLogInbtn(request.getContextPath()+"/view/loginPage.jsp"));	
-          		}
+          session = request.getSession();
+  		if(session.getAttribute("customer") !=null)
+  		{
+  			out.print(PrintServices.getLogOutbtn(request.getContextPath()+"/LogOutHandler"));
+  			out.print(PrintServices.getShoppingCartbtn(request.getContextPath()+"/ShoppingCartHandler"));
+  		}
+  		else
+  		{
+  			out.print(PrintServices.getRegisterbtn(request.getContextPath()+"/view/registrationPage.jsp"));	
+  			out.print(PrintServices.getLogInbtn(request.getContextPath()+"/view/loginPage.jsp"));	
+  		}
           %>
         </ul>
       </nav>
       <main class="item-c">
-        <h2>Why to choose us;</h2>
+      <%
+     	 String h2 =""; 
+      	 if(session.getAttribute("h2")!=null)
+      	 {
+      		
+      		h2 = session.getAttribute("h2").toString();
+      	 }else
+      	 {
+      		if(request.getAttribute("h2")!=null)
+            {
+           	 h2= request.getAttribute("h2").toString();
+            }
+      	 }
+         
+         out.print("<h2>"+h2+"</h2>");
+         
+      %>
         <table>
-          <tr>
-            <td>
-              <p>Free support!</p>
-              <img
-                src="${pageContext.request.contextPath}/photos/pic-support.png"
-                alt="Support"
-                width="200"
-                height="150"
-              />
-            </td>
-            <td>
-              <p>Free delivery!</p>
-              <img
-                src="${pageContext.request.contextPath}/photos/pic-delivery.png"
-                alt="Delivery"
-                width="200"
-                height="150"
-              />
-            </td>
-            <td>
-              <p>All payment methods!</p>
-              <img
-                src="${pageContext.request.contextPath}/photos/pic-payment-methods.png"
-                alt="Payment Methods"
-                width="200"
-                height="150"
-              />
-            </td>
-          </tr>
-        </table>
+        <tr>
+      <%
+        	out.print(PrintServices.getProductsForSPTable(request));
+      %>
+         
       </main>
       <footer class="item-e">
         <address>

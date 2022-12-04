@@ -56,11 +56,7 @@ public class RegistrationHandler extends HttpServlet {
 	private void createSession(HttpServletRequest request,CustomerBean customer) 
 	{
 		HttpSession session = request.getSession();
-    	session.setAttribute("first_name", customer.getFirstName());
-		session.setAttribute("last_name", customer.getLastName());
-		session.setAttribute("username", customer.getUsername());
-		session.setAttribute("address", customer.getAddress());
-		session.setAttribute("email", customer.getEmail());
+		session.setAttribute("customer",customer);
 	}
 
 }

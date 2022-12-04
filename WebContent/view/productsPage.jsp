@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.List" %>
 <%@ page import="beans.ProductBean" %>
+<%@ page import="services.PrintServices" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -33,51 +34,44 @@
             <div class="dropdown">
               <p class="dropP">Products</p>
               <div class="dropdown-content">
-                <a href="#">Computers</a>
+                <a href="${pageContext.request.contextPath}/ComputersPageHandler">Computers</a>
                 <a href="#">Tablets</a>
                 <a href="#">Smartphones</a>
               </div>
             </div>
           </li>
           <%
-          		session = request.getSession();
-          		if(session.getAttribute("first_name") !=null)
-          		{
-          			String pathLogout = request.getContextPath()+"/LogOutHandler";
-          			out.print("<li style=\"float:right;padding-right: 1rem;\">"+"\r\n"+
-      		            	"<button type=\"button\" style=\"font-size: 1.8rem;background-color: rgb(7, 7, 7);color: white;\">"+
-      		            		"<a href=\""+pathLogout+"\">"+"Logout</a>"+"\r\n"+
-              				"</button>"+"\r\n"+
-            			"</li>");
-          		
-          		}
-          		else
-          		{
-          			
-          			String pathRegister = request.getContextPath()+"/view/registrationPage.jsp";
-          			out.print("<li id=\"register\">"+"\r\n"+
-      		            	"<button type=\"button\" id=\"openregister\">"+
-      		            		"<a href=\""+pathRegister+"\">"+"Register</a>"+"\r\n"+
-              				"</button>"+"\r\n"+
-            			"</li>");
-          			String pathLogin = request.getContextPath()+"/view/loginPage.jsp";
-          			out.print("<li id=\"logIn\">"+"\r\n"+
-          		            	"<button type=\"button\" id=\"openLogIn\">"+
-          		            		"<a href=\""+pathLogin+"\">"+"Login</a>"+"\r\n"+
-                  				"</button>"+"\r\n"+
-                			"</li>");	}
+          	session = request.getSession();
+    		if(session.getAttribute("customer") !=null)
+    		{
+    			out.print(PrintServices.getLogOutbtn(request.getContextPath()+"/LogOutHandler"));
+    			out.print(PrintServices.getShoppingCartbtn(request.getContextPath()+"/ShoppingCartHandler"));
+    		}
+    		else
+    		{
+    			out.print(PrintServices.getRegisterbtn(request.getContextPath()+"/view/registrationPage.jsp"));	
+    			out.print(PrintServices.getLogInbtn(request.getContextPath()+"/view/loginPage.jsp"));	
+    		}
           %>
         </ul>
       </nav>
       <main class="item-c">
       <%
-         if(request.getAttribute("h2")!=null)
-         {
-        	 out.print("<h2>"+request.getAttribute("h2").toString()+"</h2>");
-         }else
-         {
-        	 out.print("Products");
-         }
+      	 session = request.getSession();
+     	 String h2 =""; 
+      	 if(session.getAttribute("h2")!=null)
+      	 {
+      		
+      		h2 = session.getAttribute("h2").toString();
+      	 }else
+      	 {
+      		if(request.getAttribute("h2")!=null)
+            {
+           	 h2= request.getAttribute("h2").toString();
+            }
+      	 }
+         
+         out.print("<h2>"+h2+"</h2>");
          
       %>
         <table>
@@ -86,44 +80,28 @@
         
         	int count=1;
         	List<ProductBean> products=null;
-        	if(request.getAttribute("products")==null)
+        	if((request.getAttribute("products")==null) && (request.getSession()==null))
         	{
         		out.print("<h4 style=\"float:center;\">No Data to display.</h4>");
         	}else
         	{
-        		products = (List)request.getAttribute("products");
-        		
-        		for(ProductBean p:products)
-            	{
-        			if(count==1)
-        			{
-        				out.print("<tr>\r\n");
-        			}
-        			String photopath = request.getContextPath()+p.getPhotopath(); 
-            		out.print("<td>\r\n"+
-        					  	"<div class=\"card\">\r\n"+
-            				  		"<img\r\n"+
-        					  			"src=\""+photopath+"\"\r\n"+
-            				  			"alt=\""+p.getName()+"\"\r\n"+
-        					  			"width=\"80\"\r\n"+
-            				  			"height=\"120\"\r\n"+
-        					  			"style=\"width: 100%\"\r\n"+
-            				  		"/>\r\n"+
-        					  		"<h3>"+p.getName()+"</h3>\r\n"+
-            				  "<p class=\"price\">$"+String.valueOf(p.getPrice())+"</p>\r\n"+
-        					  "<p>Some text for the computer.</p>\r\n"+
-            				  "<p><button>Add to Cart</button></p>\r\n"+
-        					  "</div>\r\n"+
-            				  "</td>\r\n");     
-        			if(count==3)
-        			{
-        				out.print("</tr>\r\n");
-        			}
-        			count++;
+        		if(request.getSession()!=null)
+        		{
+        			session = request.getSession();
+        			products = (List)session.getAttribute("products");
+        		}else
+        		{
+        			products = (List)request.getAttribute("products");
         		}
+        		if(request.getAttribute("addToCartResult") != null)
+	  			{
+	  				out.print(PrintServices.getAddToCartResulth5(request.getAttribute("addToCartResult").toString()));
+	  				request.removeAttribute("addToCartResult");
+	  			}
+        		out.print(PrintServices.getProductsTable(products, request));
         	}
         %>
-      </table>
+        </table>
       </main>
       <footer class="item-e">
         <address>

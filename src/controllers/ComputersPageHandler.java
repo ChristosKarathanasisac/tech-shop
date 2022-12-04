@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import beans.ProductBean;
 import dbhandlers.DButilities;
@@ -27,16 +28,17 @@ public class ComputersPageHandler extends HttpServlet {
 	     DButilities dao = new DButilities();
 	     
 	     products = dao.getProductsFromDB("computer");
-	     request.setAttribute("h2", "Computers Page");
-	     request.setAttribute("products", products);
-	     
-	    /* if(products!=null) 
+	     if(request.getSession()!=null) 
 	     {
-	    	 for(ProductBean p:products) 
-		     {
-		    	 System.out.println(p.getName());
-		     }
-	     }*/
+	    	 HttpSession session = request.getSession();
+	    	 session.setAttribute("h2", "Computers Page");
+	    	 session.setAttribute("products", products);
+	     }else 
+	     {
+	    	 request.setAttribute("h2", "Computers Page");
+		     request.setAttribute("products", products);
+	     }
+	    
 	     dispatcher.forward(request, response);
 	}
 

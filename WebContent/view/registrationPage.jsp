@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="services.PrintServices" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -36,32 +37,18 @@
               </div>
             </div>
           </li>
-          <%
-          		session = request.getSession();
-          		if(session.getAttribute("first_name") !=null)
-          		{
-          			String pathLogout = request.getContextPath()+"/LogOutHandler";
-          			out.print("<li style=\"float:right;padding-right: 1rem;\">"+"\r\n"+
-      		            	"<button type=\"button\" style=\"font-size: 1.8rem;background-color: rgb(7, 7, 7);color: white;\">"+
-      		            		"<a href=\""+pathLogout+"\">"+"Logout</a>"+"\r\n"+
-              				"</button>"+"\r\n"+
-            			"</li>");
-          			
-          		}else
-          		{
-          			String pathRegister = request.getContextPath()+"/view/registrationPage.jsp";
-          			out.print("<li id=\"register\">"+"\r\n"+
-      		            	"<button type=\"button\" id=\"openregister\">"+
-      		            		"<a href=\""+pathRegister+"\">"+"Register</a>"+"\r\n"+
-              				"</button>"+"\r\n"+
-            			"</li>");
-          			String pathLogin = request.getContextPath()+"/view/loginPage.jsp";
-          			out.print("<li id=\"logIn\">"+"\r\n"+
-          		            	"<button type=\"button\" id=\"openLogIn\">"+
-          		            		"<a href=\""+pathLogin+"\">"+"Login</a>"+"\r\n"+
-                  				"</button>"+"\r\n"+
-                			"</li>");
-          		}
+          <%	
+          	session = request.getSession();
+    		if(session.getAttribute("customer") !=null)
+    		{
+    			out.print(PrintServices.getLogOutbtn(request.getContextPath()+"/LogOutHandler"));
+    			out.print(PrintServices.getShoppingCartbtn(request.getContextPath()+"/ShoppingCartHandler"));
+    		}
+    		else
+    		{
+    			out.print(PrintServices.getRegisterbtn(request.getContextPath()+"/view/registrationPage.jsp"));	
+    			out.print(PrintServices.getLogInbtn(request.getContextPath()+"/view/loginPage.jsp"));	
+    		}
           %>
         </ul>
       </nav>
@@ -146,9 +133,7 @@
          <%
     	    if((request.getAttribute("result")!=null))
     		{
-    	    	out.print("<p>\r\n"+
-    	    					request.getAttribute("result")+"\r\n"+
-    	            		  "</p>");
+    	    	out.print(PrintServices.getResultp(request.getAttribute("result").toString()));
     		}
             
 		  %>

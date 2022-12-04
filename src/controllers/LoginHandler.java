@@ -15,9 +15,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import beans.CustomerBean;
 import dbhandlers.DButilities;
 
-/**
- * Servlet implementation class LoginHandler
- */
 @WebServlet("/LoginHandler")
 public class LoginHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -26,7 +23,7 @@ public class LoginHandler extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 String  address = "/view/loginPage.jsp";
 	     RequestDispatcher dispatcher = request.getRequestDispatcher(address);
-	     String result = "";
+	    String result = "";
 		
 		CustomerBean customer = new CustomerBean();
 		DButilities dao = new DButilities();
@@ -50,12 +47,7 @@ public class LoginHandler extends HttpServlet {
 	private void createSession(HttpServletRequest request,CustomerBean customer) 
 	{
 		HttpSession session = request.getSession();
-		
-    	session.setAttribute("first_name", customer.getFirstName());
-		session.setAttribute("last_name", customer.getLastName());
-		session.setAttribute("username", customer.getUsername());
-		session.setAttribute("address", customer.getAddress());
-		session.setAttribute("email", customer.getEmail());
+		session.setAttribute("customer",customer);
 	}
 
 }

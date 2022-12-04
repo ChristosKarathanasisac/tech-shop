@@ -46,6 +46,9 @@ public class ProductBean implements Serializable {
 	public void setPhotopath(String photopath) {
 		this.photopath = photopath;
 	}
-	
+	public double getSumPrice(int num) 
+	{
+		return this.getPrice()*num;
+	}
 
 }

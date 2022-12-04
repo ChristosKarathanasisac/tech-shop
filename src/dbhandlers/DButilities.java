@@ -2,6 +2,7 @@ package dbhandlers;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Set;
 
 import beans.CustomerBean;
 import beans.ProductBean;
@@ -109,7 +110,6 @@ public  class DButilities {
 		{
 		   con =getConnection();
 		}
-		//System.out.println("connection  ok");
 		try {
 			 PreparedStatement preparedStatement = con
 			            .prepareStatement("SELECT * FROM customers WHERE USERNAME = ? AND PASSWORD =?"); 
@@ -124,6 +124,7 @@ public  class DButilities {
 			            	customer.setEmail(rs.getString("EMAIL"));
 			            	customer.setUsername(rs.getString("USERNAME"));
 			            }
+			            con.close();
 			            return customer;
 			            } catch (SQLException e) {
 			
@@ -147,7 +148,6 @@ public  class DButilities {
 		{
 		   con =getConnection();
 		}
-		//System.out.println("connection  ok");
 		try {
 			 PreparedStatement preparedStatement = con
 			            .prepareStatement("SELECT * FROM products WHERE CATEGORY =?"); 
@@ -164,6 +164,7 @@ public  class DButilities {
 			            	
 			            	products.add(product);
 			            }
+			            con.close();
 			            return products;
 			            } catch (SQLException e) {
 			
@@ -178,4 +179,94 @@ public  class DButilities {
 		}
 					
 	}
+	public ArrayList<ProductBean> getProductsFromDB(Set<String> ids)
+	{
+		{
+			ProductBean product =null;
+			ArrayList<ProductBean> products = new ArrayList<ProductBean>();
+			Connection con =null;
+			if(loadDriver()) 
+			{
+			   con =getConnection();
+			}
+			try {
+				String idsForSQL="";
+				int counter = 1;
+				if(ids.size()==0) {return products;}
+				for(String s:ids) 
+				{
+					if(counter == ids.size()) 
+					{
+						idsForSQL=idsForSQL+s;
+					}else 
+					{
+						idsForSQL=idsForSQL+s+",";
+						counter++;
+					}
+				}
+				 Statement st = con.createStatement();
+				            String query = "SELECT * FROM products WHERE ID IN ("+idsForSQL+")";
+				            ResultSet rs = st.executeQuery(query);
+				            while (rs.next()) {
+				            	product  =new ProductBean();
+				            	product.setId(rs.getInt("ID"));
+				            	product.setName(rs.getString("NAME"));
+				            	product.setCategory(rs.getString("CATEGORY"));
+				            	product.setBalance(rs.getInt("BALANCE"));
+				            	product.setPrice(rs.getDouble("PRICE"));
+				            	product.setPhotopath((rs.getString("PHOTOPATH")));
+				            	products.add(product);
+				            }
+				            con.close();
+				            return products;
+				            } catch (SQLException e) {
+				
+				e.printStackTrace();
+				}
+				try {
+					con.close();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+					return null;
+				}
+				return null;
+			}
+	}
+	public ProductBean getProductByID(String id) 
+    {
+    	ProductBean product =null;
+		Connection con =null;
+		if(loadDriver()) 
+		{
+		   con =getConnection();
+		}
+		try {
+			 PreparedStatement preparedStatement = con
+			            .prepareStatement("SELECT * FROM products WHERE ID =?"); 
+			            preparedStatement.setString(1, id);
+			            ResultSet rs = preparedStatement.executeQuery();
+			            while (rs.next()) {
+			            	product  =new ProductBean();
+			            	product.setId(rs.getInt("ID"));
+			            	product.setName(rs.getString("NAME"));
+			            	product.setCategory(rs.getString("CATEGORY"));
+			            	product.setBalance(rs.getInt("BALANCE"));
+			            	product.setPrice(rs.getDouble("PRICE"));
+			            	product.setPhotopath((rs.getString("PHOTOPATH")));
+			            	con.close();
+			            	return product;
+			            }
+			            return product;
+			            } catch (SQLException e) {
+			
+			e.printStackTrace();
+			try {
+				con.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				return null;
+			}
+			return null;
+    }
+}
 }

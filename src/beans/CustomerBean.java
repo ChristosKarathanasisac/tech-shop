@@ -1,6 +1,9 @@
 package beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,7 +16,54 @@ public class CustomerBean implements Serializable {
 	private String password;
 	private String email;
 	private String address;
+	private HashMap<String, Integer> shoppingCart = new HashMap<String, Integer>();
 	
+	public void addProductToShoppingCart(String product) 
+	{
+		if(this.shoppingCart.containsKey(product)) 
+		{
+			this.shoppingCart.replace(product, this.shoppingCart.get(product)+1);
+		}else 
+		{
+			this.shoppingCart.put(product, 1);
+		}
+	}
+	public void removeProductFromShoppingCart(String product) 
+	{
+			this.shoppingCart.remove(product);
+	}
+	public double calculateTotal(List<ProductBean> products)
+	{
+		double total=0;
+		for(ProductBean p:products) 
+		{
+			String id = String.valueOf(p.getId());
+			int quantityOfProduct = 0;
+			if(this.getShoppingCart().get(id)!=null)
+			{
+				quantityOfProduct = (Integer)this.getShoppingCart().get(id);
+			}
+			if(quantityOfProduct == 0){continue;}
+			total+=quantityOfProduct*p.getPrice();
+		}
+		return total;
+	}
+	
+	public void removeQuantityFromProduct(String product) 
+	{
+		if(this.shoppingCart.containsKey(product)) 
+		{
+			this.shoppingCart.replace(product, this.shoppingCart.get(product)-1);
+		}
+		if(this.shoppingCart.get(product)==0) 
+		{
+			removeProductFromShoppingCart(product);
+		}
+	}
+	
+	public HashMap<String, Integer> getShoppingCart() {
+		return shoppingCart;
+	}
 	public String getFirstName() {
 		return firstName;
 	}
