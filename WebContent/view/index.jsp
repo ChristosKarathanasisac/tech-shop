@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="services.PrintServices" %>
+<%@ page import="viewServices.PrintServices" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -50,6 +50,8 @@
           			out.print(PrintServices.getRegisterbtn(request.getContextPath()+"/view/registrationPage.jsp"));	
           			out.print(PrintServices.getLogInbtn(request.getContextPath()+"/view/loginPage.jsp"));	
           		}
+          		
+          		
           %>
         </ul>
       </nav>

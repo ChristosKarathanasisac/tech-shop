@@ -14,6 +14,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import beans.CustomerBean;
 import dbhandlers.DButilities;
+import viewServices.PrintServices;
 
 @WebServlet("/LoginHandler")
 public class LoginHandler extends HttpServlet {
@@ -21,12 +22,12 @@ public class LoginHandler extends HttpServlet {
        
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 String  address = "/view/loginPage.jsp";
-	     RequestDispatcher dispatcher = request.getRequestDispatcher(address);
-	    String result = "";
-		
+		String  address = "/view/loginPage.jsp";
+	    RequestDispatcher dispatcher = request.getRequestDispatcher(address);
+		String result="";
 		CustomerBean customer = new CustomerBean();
 		DButilities dao = new DButilities();
+		
 		customer = dao.getCustomerFromDB(request.getParameter("uname").toString().trim(), DigestUtils.sha256Hex(request.getParameter("psw").toString().trim()));
 		
 		if(customer == null) 
@@ -50,4 +51,5 @@ public class LoginHandler extends HttpServlet {
 		session.setAttribute("customer",customer);
 	}
 
+	
 }

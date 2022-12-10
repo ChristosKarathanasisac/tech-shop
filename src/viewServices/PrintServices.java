@@ -1,4 +1,4 @@
-package services;
+package viewServices;
 
 import java.util.List;
 
@@ -58,12 +58,35 @@ public  class PrintServices {
 					+result+"</div>";
 		return forPrint;
 	}
-	public static String getProductsTable(List<ProductBean> products,HttpServletRequest request) 
+	public static String getProductsTable(HttpServletRequest request) 
 	{
 		int count = 1;
 		String forPrint = "";
 		String photopath = ""; 
 		String servletPath = request.getContextPath()+"/ShoppingCartHandler";
+		HttpSession session = request.getSession();
+		
+    	List<ProductBean> products=null;
+    	if((request.getAttribute("products")==null) && (request.getSession()==null))
+    	{
+    		forPrint=forPrint+"<h4 style=\"float:center;\">No Data to display.</h4>";
+    		return forPrint;
+    	}else
+    	{
+    		if(request.getSession()!=null)
+    		{
+    			session = request.getSession();
+    			products = (List)session.getAttribute("products");
+    		}
+    		else
+    		{
+    			products = (List)request.getAttribute("products");
+    		}
+    		if(request.getAttribute("addToCartResult") != null)
+  			{
+    			forPrint=forPrint+PrintServices.getAddToCartResulth5(request.getAttribute("addToCartResult").toString());
+  				request.removeAttribute("addToCartResult");
+  			}
 		for(ProductBean p:products)
     	{
 			photopath = request.getContextPath()+p.getPhotopath();
@@ -94,6 +117,7 @@ public  class PrintServices {
 			count++;
 		}
 		return forPrint;
+    	}
 	}
 	public static String getProductsForSPTable(HttpServletRequest request) 
 	{

@@ -3,7 +3,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="beans.ProductBean" %>
 <%@ page import="beans.CustomerBean" %>
-<%@ page import="services.PrintServices" %>
+<%@ page import="viewServices.PrintServices" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -43,16 +43,17 @@
           </li>
           <%
           session = request.getSession();
-  		if(session.getAttribute("customer") !=null)
-  		{
+  		  if(session.getAttribute("customer") !=null)
+  		   {
   			out.print(PrintServices.getLogOutbtn(request.getContextPath()+"/LogOutHandler"));
   			out.print(PrintServices.getShoppingCartbtn(request.getContextPath()+"/ShoppingCartHandler"));
-  		}
-  		else
-  		{
+  		   }
+  		  else
+  		  {
   			out.print(PrintServices.getRegisterbtn(request.getContextPath()+"/view/registrationPage.jsp"));	
   			out.print(PrintServices.getLogInbtn(request.getContextPath()+"/view/loginPage.jsp"));	
-  		}
+  		  }
+  			
           %>
         </ul>
       </nav>

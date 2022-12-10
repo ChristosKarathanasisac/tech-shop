@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.List" %>
 <%@ page import="beans.ProductBean" %>
-<%@ page import="services.PrintServices" %>
+<%@ page import="viewServices.PrintServices" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -52,6 +52,7 @@
     			out.print(PrintServices.getRegisterbtn(request.getContextPath()+"/view/registrationPage.jsp"));	
     			out.print(PrintServices.getLogInbtn(request.getContextPath()+"/view/loginPage.jsp"));	
     		}
+    		
           %>
         </ul>
       </nav>
@@ -61,16 +62,8 @@
      	 String h2 =""; 
       	 if(session.getAttribute("h2")!=null)
       	 {
-      		
       		h2 = session.getAttribute("h2").toString();
-      	 }else
-      	 {
-      		if(request.getAttribute("h2")!=null)
-            {
-           	 h2= request.getAttribute("h2").toString();
-            }
       	 }
-         
          out.print("<h2>"+h2+"</h2>");
          
       %>
@@ -78,28 +71,8 @@
         <tr>
         <%
         
-        	int count=1;
-        	List<ProductBean> products=null;
-        	if((request.getAttribute("products")==null) && (request.getSession()==null))
-        	{
-        		out.print("<h4 style=\"float:center;\">No Data to display.</h4>");
-        	}else
-        	{
-        		if(request.getSession()!=null)
-        		{
-        			session = request.getSession();
-        			products = (List)session.getAttribute("products");
-        		}else
-        		{
-        			products = (List)request.getAttribute("products");
-        		}
-        		if(request.getAttribute("addToCartResult") != null)
-	  			{
-	  				out.print(PrintServices.getAddToCartResulth5(request.getAttribute("addToCartResult").toString()));
-	  				request.removeAttribute("addToCartResult");
-	  			}
-        		out.print(PrintServices.getProductsTable(products, request));
-        	}
+        		out.print(PrintServices.getProductsTable(request));
+        	//}
         %>
         </table>
       </main>

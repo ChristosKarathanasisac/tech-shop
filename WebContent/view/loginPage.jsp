@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="services.PrintServices" %>
+<%@ page import="viewServices.PrintServices" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -37,8 +37,8 @@
             </div>
           </li>
           <%
-          		session = request.getSession();
-          		if(session.getAttribute("customer") !=null)
+          		HttpSession ses = request.getSession();
+          		if(ses.getAttribute("customer") !=null)
           		{
           			out.print(PrintServices.getLogOutbtn(request.getContextPath()+"/LogOutHandler"));
           			out.print(PrintServices.getShoppingCartbtn(request.getContextPath()+"/ShoppingCartHandler"));
@@ -48,6 +48,8 @@
           			out.print(PrintServices.getRegisterbtn(request.getContextPath()+"/view/registrationPage.jsp"));	
           			out.print(PrintServices.getLogInbtn(request.getContextPath()+"/view/loginPage.jsp"));	
           		}
+          		
+          		
           %>
         </ul>
       </nav>

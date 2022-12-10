@@ -16,6 +16,7 @@ import beans.CustomerBean;
 import beans.ProductBean;
 import dbhandlers.DButilities;
 import services.ShoppingCartServices;
+import viewServices.PrintServices;
 
 @WebServlet("/ShoppingCartHandler")
 public class ShoppingCartHandler extends HttpServlet {
@@ -27,7 +28,6 @@ public class ShoppingCartHandler extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher(address);
         String addToCartResult = "";
         ShoppingCartServices services = new ShoppingCartServices();
-		
 		if(session.getAttribute("customer") ==null) 
 		{
 			addToCartResult = "You should Login in order to buy a product!";
@@ -74,5 +74,5 @@ public class ShoppingCartHandler extends HttpServlet {
 			dispatcher.forward(request, response);
 		}
 	}
-
+	
 }

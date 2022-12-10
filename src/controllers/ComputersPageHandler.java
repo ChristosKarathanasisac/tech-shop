@@ -13,10 +13,9 @@ import javax.servlet.http.HttpSession;
 
 import beans.ProductBean;
 import dbhandlers.DButilities;
+import viewServices.PrintServices;
 
-/**
- * Servlet implementation class ComputersPageHandler
- */
+
 @WebServlet("/ComputersPageHandler")
 public class ComputersPageHandler extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -26,7 +25,7 @@ public class ComputersPageHandler extends HttpServlet {
 	     RequestDispatcher dispatcher = request.getRequestDispatcher(address);
 	     ArrayList<ProductBean> products = new ArrayList<ProductBean>();
 	     DButilities dao = new DButilities();
-	     
+	    
 	     products = dao.getProductsFromDB("computer");
 	     if(request.getSession()!=null) 
 	     {
@@ -41,5 +40,7 @@ public class ComputersPageHandler extends HttpServlet {
 	    
 	     dispatcher.forward(request, response);
 	}
+	
+	
 
 }
